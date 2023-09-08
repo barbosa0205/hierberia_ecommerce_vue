@@ -39,8 +39,8 @@
 
         <template v-if="!user">
           <NavLink @click="() => (menu = false)" :to="{ name: 'Login' }"
-            >Login<i class="ri-login-box-line text-lg ml-2"></i
-          ></NavLink>
+            >Login</NavLink
+          >
           <NavLink @click="() => (menu = false)" :to="{ name: 'Register' }"
             >Register</NavLink
           >

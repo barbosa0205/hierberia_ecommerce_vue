@@ -6,11 +6,15 @@ import {useUserStore} from '../stores/useUserStore'
 
 // defining routes
 const routes = [
+
+    // Home
     {
         path: '/',
         name:'Home',
         component: Home
     },
+
+    // Auth
     {
         path: '/login',
         name: 'Login',
@@ -21,6 +25,8 @@ const routes = [
         name: 'Register',
         component: () => import('../pages/Register.vue')
     },
+
+    //Profile
     {
         path: '/profile',
         name: 'Profile',
@@ -29,6 +35,8 @@ const routes = [
             requiresAuth: true,
         }
     },
+
+    //Products
     {
         path: '/products',
         name: 'Products',
@@ -39,8 +47,15 @@ const routes = [
     path: '/products/:productSlug',
     name: 'ProductDetails',
     component: () => import('../pages/products/ProductDetails.vue'),
-
     },
+    {
+        path: '/favorites',
+        name: 'Favorites',
+        component: () => import('../pages/Favorites.vue'),
+        meta: {
+            requiresAuth: true,
+        }
+    }
 ]
 
 // creating router

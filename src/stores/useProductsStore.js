@@ -1,42 +1,47 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue';
-import axios from "../axios"
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import axios from "../axios";
 
-export const useProductsStore = defineStore('products', () => {
+export const useProductsStore = defineStore("products", () => {
+  const newProducts = ref([]);
+  const productDetails = ref(null);
+  const categories = ref([]);
 
-const newProducts = ref([])
-const categories = ref([])
-
-const getProducts = async (url) => {
+  const getProducts = async (url) => {
     try {
-        const {data} = await axios.get(url)
-    newProducts.value = data
-    console.log(data)
+      const { data } = await axios.get(url);
+      newProducts.value = data;
+      console.log(data);
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-}
+  };
 
-const getProduct = async (slug) => { 
-  try {
-    const product = await axios.get(`/api/products/${slug}`)
-    return product
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const getCategories = async (url) => {
+  const getProduct = async (slug) => {
     try {
-        const {data} = await axios.get(url)
-    categories.value = data
-    console.log(data)
+      const product = await axios.get(`/api/products/${slug}`);
+      return product;
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-}
+  };
 
+  const getCategories = async (url) => {
+    try {
+      const { data } = await axios.get(url);
+      categories.value = data;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-return {newProducts,categories, getProduct, getProducts,getCategories};
-})
+  return {
+    newProducts,
+    categories,
+    productDetails,
+    getProduct,
+    getProducts,
+    getCategories,
+  };
+});

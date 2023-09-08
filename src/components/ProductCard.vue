@@ -44,12 +44,6 @@
         ></SolidButton>
       </div>
     </section>
-
-    <!-- favorite icon -->
-
-    <i
-      class="ri-heart-fill absolute top-2 right-4 w-6 h-6 bg-slate-200 flex items-center justify-center rounded-full text-slate-500 cursor-pointer"
-    ></i>
   </article>
 </template>
 <script setup>
@@ -57,6 +51,8 @@ import { defineProps } from "vue";
 import { useRouter } from "vue-router";
 import BorderButton from "./ui/button/BorderButton.vue";
 import SolidButton from "./ui/button/SolidButton.vue";
+import { useUserStore } from "../stores/useUserStore";
+import { storeToRefs } from "pinia";
 
 defineProps({
   data: {
@@ -66,5 +62,11 @@ defineProps({
 });
 
 const router = useRouter();
+
+const userStore = useUserStore();
+
+const { addProductToFavorite } = useUserStore();
+
+// const { user } = storeToRefs(userStore);
 </script>
 <style lang=""></style>
