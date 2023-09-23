@@ -1,11 +1,9 @@
 <template lang="">
-    <main class="w-full min-h-screen mx-auto 2xl:w-10/12 bg-white font-mono text-slate-800">
-        <slot></slot>
-    </main>
+  <main
+    :class="`w-full min-h-screen mx-auto bg-white font-mono text-slate-800 sm:max-w-screen-2xl`"
+  >
+    <slot></slot>
+  </main>
 </template>
-<script setup>
-
-</script>
-<style lang="">
-    
-</style>
+<script setup></script>
+<style lang=""></style>

@@ -1,7 +1,8 @@
 <template lang="">
   <button
     :class="
-      'px-2 py-1 bg-emerald-500 text-white font-semibold rounded-sm ' + styles
+      'px-2 py-1 bg-emerald-500 text-white font-semibold rounded-sm max-w-sm ' +
+      styles
     "
   >
     <slot></slot>

@@ -3,9 +3,9 @@ import { ref } from "vue";
 import axios from "../axios";
 
 export const useProductsStore = defineStore("products", () => {
+  const cartItems = ref([]);
   const newProducts = ref([]);
   const productDetails = ref(null);
-  const categories = ref([]);
 
   const getProducts = async (url) => {
     try {
@@ -29,19 +29,45 @@ export const useProductsStore = defineStore("products", () => {
   const getCategories = async (url) => {
     try {
       const { data } = await axios.get(url);
-      categories.value = data;
-      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const getCategory = async (slug) => {
+    try {
+      const { data } = await axios.get(`/api/categories/${slug}`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getProductsByCategory = async (category) => {
+    try {
+      const { data } = await axios.get(`/api/products?category=${category}`);
+      console.log({ data });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addProductToCart = (product) => {
+    const isInCart = cartItems.value.find((pdt) => pdt.id === product.id);
+    if (!isInCart) cartItems.value.push(product);
+  };
+
   return {
+    cartItems,
     newProducts,
-    categories,
     productDetails,
     getProduct,
     getProducts,
     getCategories,
+    getCategory,
+    getProductsByCategory,
+    addProductToCart,
   };
 });

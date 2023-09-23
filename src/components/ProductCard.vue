@@ -1,6 +1,6 @@
 <template lang="">
   <article
-    class="relative w-[12rem] min-w-[12rem] s:w-[14rem] s:min-w-[14rem] mx-3 pb-4 first:ml-0 bg-slate-100 border border-slate-200"
+    :class="`relative w-[12rem] min-w-[12rem] s:w-[14rem] s:min-w-[14rem] mx-3 pb-4 first:ml-0 bg-slate-100 border border-slate-200 ${otherStyles}`"
   >
     <!-- Image -->
     <img :srcset="data.images[0].url" class="w-full h-40" />
@@ -39,7 +39,17 @@
           Details
         </BorderButton>
 
-        <SolidButton styles="mx-2 py-0 px-3 text-lg"
+        <!-- Cart -->
+        <SolidButton
+          @click="
+            addProductToCart({
+              id: data.id,
+              name: data.name,
+              price: data.price,
+              image: data.images[0].url,
+            })
+          "
+          styles="mx-2 py-0 px-3 text-lg"
           ><i class="ri-shopping-cart-line"></i
         ></SolidButton>
       </div>
@@ -49,15 +59,20 @@
 <script setup>
 import { defineProps } from "vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "../stores/useUserStore";
+import { useProductsStore } from "../stores/useProductsStore";
 import BorderButton from "./ui/button/BorderButton.vue";
 import SolidButton from "./ui/button/SolidButton.vue";
-import { useUserStore } from "../stores/useUserStore";
-import { storeToRefs } from "pinia";
 
 defineProps({
   data: {
     type: Object,
     default: null,
+  },
+  otherStyles: {
+    type: String,
+    default: "",
   },
 });
 
@@ -65,7 +80,11 @@ const router = useRouter();
 
 const userStore = useUserStore();
 
-const { addProductToFavorite } = useUserStore();
+const productsStore = useProductsStore();
+
+const { addProductToFavorite } = userStore;
+
+const { addProductToCart } = productsStore;
 
 // const { user } = storeToRefs(userStore);
 </script>

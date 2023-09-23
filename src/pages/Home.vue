@@ -35,7 +35,11 @@
         class="w-full flex items-center justify-center pt-5"
         v-if="newProducts.length"
       >
-        <SolidButton>Show More</SolidButton>
+        <SolidButton
+          ><router-link :to="{ name: 'Categories' }"
+            >Ver todas las categorias</router-link
+          ></SolidButton
+        >
       </div>
     </ul>
   </section>
@@ -43,7 +47,7 @@
 
 <script setup>
 import axios from "../axios";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../stores/useUserStore";
 import { useProductsStore } from "../stores/useProductsStore";
@@ -52,16 +56,19 @@ import ProductCard from "../components/ProductCard.vue";
 import H2 from "../components/ui/text/H2.vue";
 import SolidButton from "../components/ui/button/SolidButton.vue";
 
+const categories = ref([]);
 const userStore = useUserStore();
 const productsStore = useProductsStore();
 
 const { user } = storeToRefs(userStore);
-const { newProducts, categories } = storeToRefs(productsStore);
+const { newProducts } = storeToRefs(productsStore);
 
-onMounted(() => {
+onMounted(async () => {
   userStore.getUser();
   productsStore.getProducts("/api/products");
-  productsStore.getCategories("/api/categories?count=4");
+  categories.value = await productsStore.getCategories(
+    "/api/categories?count=4"
+  );
 });
 </script>
 <style lang="scss"></style>
