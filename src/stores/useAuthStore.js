@@ -49,6 +49,7 @@ console.log(error)
 
 
 const logout = async () => {
+
 try {
   await getCSRF()
   await axios.post('/logout')

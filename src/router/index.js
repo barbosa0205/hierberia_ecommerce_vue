@@ -64,6 +64,11 @@ const routes = [
     component: () => import("../pages/categories/Category.vue"),
   },
   {
+    path: "/my_cart",
+    component: () => import("../pages/MyCart.vue"),
+    name: 'MyCart'
+  },
+  {
     path: "/dashboard",
     component: () => import("../pages/dashboard/index.vue"),
     meta: {

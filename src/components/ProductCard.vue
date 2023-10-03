@@ -42,7 +42,7 @@
         <!-- Cart -->
         <SolidButton
           @click="
-            addProductToCart({
+            addCartItem({
               id: data.id,
               name: data.name,
               price: data.price,
@@ -84,7 +84,7 @@ const productsStore = useProductsStore();
 
 const { addProductToFavorite } = userStore;
 
-const { addProductToCart } = productsStore;
+const { addCartItem } = productsStore;
 
 // const { user } = storeToRefs(userStore);
 </script>

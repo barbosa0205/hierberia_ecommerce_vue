@@ -54,19 +54,39 @@
 
       <div class="relative flex items-center justify-end px-2">
         <!-- Cart  -->
-        <div @click="toggleCartMenu" class="relative mr-5 cursor-pointer">
+        <div
+          v-if="width < 640"
+          @click="router.push({ name: 'MyCart' })"
+          class="relative mr-5 cursor-pointer"
+        >
           <i class="ri-shopping-cart-line text-lg ml-2 sm:ml-0"></i>
           <!-- Cart Notification -->
           <span
-            v-if="cartItems.length"
-            class="flex items-center justify-center absolute bottom-4 left-4 w-6 h-6 text-sm rounded-full bg-amber-300"
-            >{{ cartItems.length }}</span
+            v-if="cartItems.products.length"
+            class="flex items-center justify-center absolute bottom-4 left-4 w-5 h-5 text-sm rounded-full bg-amber-300"
+            >{{ cartItems.products.length }}</span
           >
         </div>
-
+        <div
+          v-else
+          @click="toggleCartMenu"
+          class="relative mr-5 cursor-pointer"
+        >
+          <i class="ri-shopping-cart-line text-lg ml-2 sm:ml-0"></i>
+          <!-- Cart Notification -->
+          <span
+            v-if="cartItems.products.length"
+            class="flex items-center justify-center absolute bottom-4 left-4 w-6 h-6 text-sm rounded-full bg-amber-300"
+            >{{ cartItems.products.length }}</span
+          >
+        </div>
         <PopDown :toggle="cartMenu" otherStyles="sm:right-3 sm:top-14">
           <ul>
-            <li class="flex" v-for="(item, index) in cartItems" :key="index">
+            <li
+              class="flex"
+              v-for="(item, index) in cartItems.products"
+              :key="index"
+            >
               <img class="w-20 h-20 rounded-full" :src="item.image" alt="" />
               <div class="flex flex-col items-center justify-center mx-2">
                 <p>{{ item.name }}</p>
@@ -95,8 +115,14 @@ import { useUserStore } from "../stores/useUserStore";
 import NavLink from "./NavLink.vue";
 import { useProductsStore } from "../stores/useProductsStore";
 import PopDown from "../components/ui/drops/PopDown.vue";
-const width = ref(0);
+import { useDimensionsStore } from "../stores/useDimensionsStore";
+
 const menu = ref(false);
+
+const dimensionsStore = useDimensionsStore();
+
+const { width } = storeToRefs(dimensionsStore);
+
 const userStore = useUserStore();
 
 const productStore = useProductsStore();
@@ -111,17 +137,6 @@ const cartMenu = ref(false);
 
 const toggleCartMenu = () => {
   cartMenu.value = !cartMenu.value;
-};
-
-onMounted(() => {
-  window.addEventListener("resize", myEventHandler);
-  width.value = window.innerWidth;
-});
-
-onUnmounted(() => clearInterval(myEventHandler));
-
-const myEventHandler = (e) => {
-  width.value = e.currentTarget.innerWidth;
 };
 
 const toggleMenu = () => {

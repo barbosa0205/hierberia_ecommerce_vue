@@ -73,14 +73,15 @@
           </SolidButton>
           <SolidButton
             @click="
-              addProductToCart({
+              addCartItem({
                 id: productDetails.id,
                 name: productDetails.name,
                 price: productDetails.price,
                 image: productDetails.images[0].url,
               })
             "
-            styles="w-full px-3 py-2 mt-1 text-xl font-normal bg-amber-400 border border-amber-500 sm:py-4"
+            bgColor="bg-yellow-500"
+            styles="w-full px-3 py-2 mt-1 text-xl font-normal border border-amber-500 sm:py-4"
             >Add to cart</SolidButton
           >
         </div>
@@ -109,7 +110,7 @@ const route = useRoute();
 const productsStore = useProductsStore();
 const userStore = useUserStore();
 
-const { getProduct, addProductToCart } = productsStore;
+const { getProduct, addCartItem } = productsStore;
 const { toggleFavorite } = userStore;
 
 const { productDetails } = storeToRefs(productsStore);
